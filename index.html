@@ -189,9 +189,9 @@ There is no &quot;raw data&quot;, data models and standards in information syste
 	- Selection: min freq. of 8 occurrences in the corpus. 
 	- Validation: with expert researchers. 
 - Periods and inner coherence of each time step: detected based on the distance between the semantic composition in each time step (year) from the most-similar (0) to the most-dissimilar (1). 
-	- Uesd the gap statistic method (Tibshirani et al., [2001](https://link.springer.com/article/10.1007/s11192-022-04403-9#ref-CR22 "Tibshirani, R., Walther, G., & Hastie, T. (2001). Estimating the number of clusters in a data set via the gap statistic. Journal of the Royal Statistical Society: Series B (statistical Methodology), 63(2), 411–423."))  
+	- Used the gap statistic method (Tibshirani et al., [2001](https://link.springer.com/article/10.1007/s11192-022-04403-9#ref-CR22 "Tibshirani, R., Walther, G., & Hastie, T. (2001). Estimating the number of clusters in a data set via the gap statistic. Journal of the Royal Statistical Society: Series B (statistical Methodology), 63(2), 411–423."))  
 - Co-occurrence Network and emergent thematic regularities. 
-	- Clustering technique: Louvain community detection algorithm with a resolution value (Aynaud, [2020](https://github.com/taynaud/python-louvain); Blondel et. al. [2008](https://doi.org/10.1088%2F1742-5468%2F2008%2F10%2FP10008))
+	- Clustering technique: Louvain community detection algorithm with a resolution value of 2 (Aynaud, [2020](https://github.com/taynaud/python-louvain); Blondel et. al. [2008](https://doi.org/10.1088%2F1742-5468%2F2008%2F10%2FP10008))
 
 <aside class="notes"><p>Louvain, a bottom-up modularity-based clustering algorithm, to detect emerging semantic clusters. Given the not deterministic nature of this process, slight variations can happen in different computations. Nevertheless, given the size of the calculated networks, additional runs were computed, still reporting a consistent community structure with the ones here reported.</p>
 </div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f9f7f3" -->
@@ -232,7 +232,7 @@ There is no &quot;raw data&quot;, data models and standards in information syste
 
 ### Publications over time
 
-<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs11192-022-04403-9/MediaObjects/11192_2022_4403_Fig2_HTML.png" alt="image|1400" style="width: 1400px; object-fit: fill">
+<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs11192-022-04403-9/MediaObjects/11192_2022_4403_Fig2_HTML.png" alt="image|1500" style="width: 1500px; object-fit: fill">
 
 **Fig 2.** Number of documents authored by French authors representing the Institute’s thematic interests in English and French (1980-2020).
 
@@ -251,7 +251,7 @@ If we want to answer this kind of questions, we need to know more about the stru
 
 ### Detected lexical period structure
 
-<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs11192-022-04403-9/MediaObjects/11192_2022_4403_Fig3_HTML.png?as=webp" alt="image|1400" style="width: 1400px; object-fit: fill">
+<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1007%2Fs11192-022-04403-9/MediaObjects/11192_2022_4403_Fig3_HTML.png?as=webp" alt="image|1500" style="width: 1500px; object-fit: fill">
 
 **Fig. 3** Period detection and significant term correlation between years in French and English. 
 
@@ -364,7 +364,7 @@ If we want to answer this kind of questions, we need to know more about the stru
 
 - Authors from the same country address **similar topics** at **different paces** with **distinct thematic orientations** in two different languages. 
 - Results show a **“natural” pattern**: the production in French has a tighter, firmer, and stronger underlying structure with a longer time frame, arising first in French.
-- *Time delay* between French and English documents over the same topics results from the need of a *maturation period* 
+- ***Time delay*** between French and English documents over the same topics results from the need of a ***maturation period***
 	- The cost of access to French-speaking journals for French scientists is lesser. 
 	- Collaborations at the national level have strengthened (Maisonobe et al., [2016](https://link.springer.com/article/10.1007/s11192-022-04403-9#ref-CR17 "Maisonobe, M., Eckert, D., Grossetti, M., Jégou, L., & Milard, B. (2016). The world network of scientific collaborations between cities: Domestic or international dynamics? Journal of Informetrics, 10(4), 1025–1036."))
 - This responds to a strategy: matters of interest get first widely discussed in French and then published in English. We called this **carry trading**
@@ -387,7 +387,7 @@ If we want to answer this kind of questions, we need to know more about the stru
 	- Thematic choices mature over time
 	- Different relative position of these thematics migrate from local to international English-speaking circuits. 
 	- This confirms what has been observed, local publications have a different value (Hanafi, [2011](https://doi.org/10.1177%2F0011392111400782"); Keim, [2016](https://doi.org/10.3917%2Frac.030.0042))
-- We looked at specific topics in a specific country and language. This might be a more general pattern, but further generalizations should be avoided.
+- We looked at specific topics in a specific country and language. This might be a more general pattern, but further generalizations should be avoided without further empirical research.
 </div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#191923" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1900px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
