@@ -1,91 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <title></title>
+    <link rel="stylesheet" href="dist/reset.css">
     <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="css/slides-extended.css" />
     <link rel="stylesheet" href="dist/theme/night.css" id="theme" />
     <link rel="stylesheet" href="plugin/highlight/zenburn.css" />
-	<link rel="stylesheet" href="css/layout.css" />
-	<link rel="stylesheet" href="plugin/customcontrols/style.css">
-	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+    <link rel="stylesheet" href="plugin/customcontrols/style.css">
 
 
 
     <script defer src="dist/fontawesome/all.min.js"></script>
 
-	<script type="text/javascript">
-		var forgetPop = true;
-		function onPopState(event) {
-			if(forgetPop){
-				forgetPop = false;
-			} else {
-				parent.postMessage(event.target.location.href, "app://obsidian.md");
-			}
+    <script type="text/javascript">
+        function pageInIframe() {
+            return (window.location !== window.parent.location);
         }
-		window.onpopstate = onPopState;
-		window.onmessage = event => {
-			if(event.data == "reload"){
-				window.document.location.reload();
-			}
-			forgetPop = true;
-		}
 
-		function fitElements(){
-			const itemsToFit = document.getElementsByClassName('fitText');
-			for (const item in itemsToFit) {
-				if (Object.hasOwnProperty.call(itemsToFit, item)) {
-					var element = itemsToFit[item];
-					fitElement(element,1, 1000);
-					element.classList.remove('fitText');
-				}
-			}
-		}
+        let forgetPop = true;
+        function onPopState(event) {
+            if(forgetPop){
+                forgetPop = false;
+            } else if( pageInIframe()) {
+                parent.postMessage(event.target.location.href, "app://obsidian.md");
+            }
+        }
+        window.onpopstate = onPopState;
+        window.onmessage = event => {
+            if(event.data == "reload"){
+                window.document.location.reload();
+            }
+            forgetPop = true;
+        }
 
-		function fitElement(element, start, end){
+        function fitElements() {
+            const itemsToFit = document.getElementsByClassName('fitText');
+            for (const item in itemsToFit) {
+                if (Object.hasOwnProperty.call(itemsToFit, item)) {
+                    const element = itemsToFit[item];
+                    fitElement(element, 1, 1000);
+                    element.classList.remove('fitText');
+                }
+            }
+        }
 
-			let size = (end + start) / 2;
-			element.style.fontSize = `${size}px`;
+        function fitElement(element, start, end) {
 
-			if(Math.abs(start - end) < 1){
-				while(element.scrollHeight > element.offsetHeight){
-					size--;
-					element.style.fontSize = `${size}px`;
-				}
-				return;
-			}
+            let size = (end + start) / 2;
+            element.style.fontSize = `${size}px`;
 
-			if(element.scrollHeight > element.offsetHeight){
-				fitElement(element, start, size);
-			} else {
-				fitElement(element, size, end);
-			}		
-		}
+            if (Math.abs(start - end) < 1) {
+                while (element.scrollHeight > element.offsetHeight) {
+                    size--;
+                    element.style.fontSize = `${size}px`;
+                }
+                return;
+            }
 
-
-		document.onreadystatechange = () => {
-			fitElements();
-			if (document.readyState === 'complete') {
-				if (window.location.href.indexOf("?export") != -1){
-					parent.postMessage(event.target.location.href, "app://obsidian.md");
-				}
-				if (window.location.href.indexOf("print-pdf") != -1){
-					let stateCheck = setInterval(() => {
-						clearInterval(stateCheck);
-						window.print();
-					}, 250);
-				}
-			}
-	};
+            if (element.scrollHeight > element.offsetHeight) {
+                fitElement(element, start, size);
+            } else {
+                fitElement(element, size, end);
+            }
+        }
 
 
-        </script>
-  </head>
-  <body>
+        document.onreadystatechange = () => {
+            fitElements();
+            if (document.readyState === 'complete') {
+                if (pageInIframe() && window.location.href.indexOf("?export") != -1){
+                    parent.postMessage(event.target.location.href, "app://obsidian.md");
+                }
+                if (window.location.href.indexOf("print-pdf") != -1){
+                    let stateCheck = setInterval(() => {
+                        clearInterval(stateCheck);
+                        window.print();
+                    }, 250);
+                }
+            }
+        };
+    </script>
+</head>
+
+<body>
     <div class="reveal">
-      <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Slides 🖥/EDS.jpg" -->
+        <div class="slides"><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Users/elsurista/Documents/1.- SEEK Post Doc/a. Sildes/Slides/EDS.jpg" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## <mark>💾 Data in a Changing Planet 🌎 </mark>
@@ -97,20 +100,19 @@
 #### Slides for class
 1. [Class 1 of 28] _Introduction to the course_ - #Week 1 - Day 1
 2. [Class 2 of 28] *Assembling a planet through technical means* - #Week 1 - Day 2
-3. [Class 3 of 28] *Knowledge for the Anthropocene* - #Week 2 - Day 1
-4. [Class 4 of 28] *Memory practices, databases and environemntal knowledge* - #Week 3 - Day 1
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" -->
+3. [Class 3 of 28] *Knowledge for the Anthropocene*- #Week 2 - Day 1
+4. [Class 4 of 28] *Memory practices and databases*- #Week 3 - Day 1
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Week 1 - Day 1  
-
 
 Monday January 13, 2025
 </div>
 
 <aside class="notes"><p>28 encounters - 13 Mondays / 15 Wednesdays, <a href="https://registrar.nd.edu/assets/563027/2024_25yr.pdf">observing ND calendar</a>
 From 1/13 to 4/30.</p>
-<!-- .slide: class="has-dark-background" data-background-color="#020A20" --></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Outline for the class
@@ -123,11 +125,11 @@ Today, we will :
 3. Go over the **syllabus** for the class
 
 4. Have **sign-ups** for reflections on class readings
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # 1. Introductions  👋
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## About myself 🧑🏻‍🏫️
@@ -137,7 +139,7 @@ Today, we will :
 3. I have experience working with a network of Socio-Environmental researcher, technologists, and practitioners to enhance the adoption of Open Technologies. 
 4. My research uses digital and ethnographic methods to study the entanglement between digital transformations, knowledge production, and socio-environmental challenges. 
 5. Fun fact: **I can grill 🔥 without using a grill**.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Round of introductions
@@ -147,7 +149,7 @@ Today, we will :
 3. What is your **major** or **minor**? What interest you the most within your program?
 4. What interests you about Environmental Data and its relation with Sustainability?
 5. **Fun fact** about yourself.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#337357" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Introductions  👋
@@ -167,22 +169,21 @@ Katherine
 _(\*) Master enrolled students_, please confirm. 
 
 Name - Home - Major / Minor + interests - Environmental Data - Fun Fact
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#f05d5e" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#f05d5e" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # 2.  Tech timeline icebreaker 📱🌍⏳
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### 1. **Landsat Satellite Program** 
 First satellite specifically designed to monitor Earth's landmasses and track changes in land use. 
 
-<img src="Images (screenshots, pitctures, etc.)/Pasted image 20250112202908.png" alt="" style="object-fit: scale-down">
-
+[![](Images (screenshots, pitctures, etc.)/Pasted image 20250112202908.png)
 [Wikipedia](https://en.wikipedia.org/wiki/Landsat_program)
 
 <aside class="notes"><p>1970s</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Real-time Air Quality Index
@@ -192,7 +193,7 @@ A centralized, nationwide (then worldwide) repository for  real-time data collec
 [EPA](https://archive.epa.gov/international/air/web/pdf/airnow.pdf)
 
 <aside class="notes"><p>1998, the AIRNow system was created to serve as a centralized, nationwide repository for these real-time data collected by the local, state, and federal agencies.</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Global Ocean Buoy Network
@@ -204,7 +205,7 @@ Deployment of automated ocean monitoring buoys tracking temperature, currents, a
 [Wikipedia](https://en.wikipedia.org/wiki/Weather_buoy)
 
 <aside class="notes"><p>1980s</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Drone-based Environmental Monitoring
@@ -215,7 +216,7 @@ Affordable drones equipped with environmental sensors for local monitoring allow
 
 
 <aside class="notes"><p>ca. 2015.</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#3C1414" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Cheap Personal air quality sensors
@@ -227,11 +228,11 @@ constantly sample particulates and gases and produce moderately accurate, almost
 [Wikipedia](https://en.wikipedia.org/wiki/Air_pollution_measurement#Personal_air_quality_sensors)
 
 <aside class="notes"><p>2005</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#E7DECD" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#E7DECD" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # 3. Syllabus 📑
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Structure of the Course: a Data Workflow 🔗
@@ -240,7 +241,7 @@ constantly sample particulates and gases and produce moderately accurate, almost
 A structured, iterative process that supports different types of human interactions with data. Not only technical steps of analysis but also involving human and social interaction. A workflow facilitates the creation of diverse intellectual contributions including datasets, methodological innovations, educational resources, software tools, and academic publications. It serves as a framework for conducting replicable research.
 
 Source: Stoudt, Sara, Váleri N. Vásquez, and Ciera C. Martinez. 2021. “Principles for Data Analysis Workflows.” _PLOS Computational Biology_ 17 (3): e1008770. [https://doi.org/10.1371/journal.pcbi.1008770](https://doi.org/10.1371/journal.pcbi.1008770).
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## 0. Introduction
@@ -265,7 +266,7 @@ Ideal workflow diagram:
     
   </defs>
   <rect x="0" y="0" width="1431.79296875" height="348.42848674823136" fill="#ffffff"></rect><g stroke-linecap="round" transform="translate(61.6015625 10) rotate(0 669.70703125 35.869140625)"><path d="M0 0 C531.58 -0.79, 1064.55 -0.73, 1339.41 0 M0 0 C517.5 -3.17, 1035.53 -2.96, 1339.41 0 M1339.41 0 C1339.03 17.23, 1340.21 32.85, 1339.41 71.74 M1339.41 0 C1338.79 28.46, 1338.08 57.17, 1339.41 71.74 M1339.41 71.74 C899.36 72.96, 457.33 72.6, 0 71.74 M1339.41 71.74 C988.38 69.28, 637.17 69.11, 0 71.74 M0 71.74 C0.8 42.11, 0.17 14.36, 0 0 M0 71.74 C0.59 57.22, 0.68 41.87, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(655.9986328482628 33.369140625) rotate(0 75.30996090173721 12.5)"><text x="75.30996090173721" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">0. Introduction</text></g><g stroke-linecap="round" transform="translate(10 176.572265625) rotate(0 108.4453125 40)"><path d="M0 0 C70.65 0.07, 141.19 -1.97, 216.89 0 M0 0 C76.9 0.96, 153.65 1.03, 216.89 0 M216.89 0 C217.41 15.79, 218.61 32.82, 216.89 80 M216.89 0 C215.89 22.03, 217.05 43.22, 216.89 80 M216.89 80 C145 78.92, 75.69 80.44, 0 80 M216.89 80 C161.94 79.07, 106.84 80.39, 0 80 M0 80 C0.24 54.93, -2.47 31.55, 0 0 M0 80 C0.24 50.8, -0.66 21.78, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g stroke-linecap="round" transform="translate(258.9609375 176.630859375) rotate(0 109.6796875 40)"><path d="M0 0 C78.03 -2.12, 154.01 -2.41, 219.36 0 M0 0 C54.46 0.04, 109.25 -0.26, 219.36 0 M219.36 0 C221.55 23.39, 219.03 49.02, 219.36 80 M219.36 0 C218.95 24.96, 218.9 50.52, 219.36 80 M219.36 80 C154.6 79.57, 90.37 79.85, 0 80 M219.36 80 C159.01 79.61, 97.05 79.46, 0 80 M0 80 C-2.22 61.46, 0.86 43.6, 0 0 M0 80 C-0.73 53.72, -0.11 29.09, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(270.4306945800781 191.630859375) rotate(0 98.20993041992188 25)"><text x="98.20993041992188" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">2. Data Processing </text><text x="98.20993041992188" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">&amp; Classification</text></g><g stroke-linecap="round" transform="translate(511.85546875 176.630859375) rotate(0 78.037109375 39.443359375)"><path d="M0 0 C56.79 -0.6, 110.38 0.5, 156.07 0 M0 0 C46.47 -0.42, 94.77 0.17, 156.07 0 M156.07 0 C156.22 18.35, 157.04 35.62, 156.07 78.89 M156.07 0 C156.54 28.05, 156.23 53.62, 156.07 78.89 M156.07 78.89 C116.7 80.41, 78.67 80.54, 0 78.89 M156.07 78.89 C118.89 81.01, 80.96 80.7, 0 78.89 M0 78.89 C1.94 59.24, 1.14 38.33, 0 0 M0 78.89 C0.6 58.9, 0.46 38.24, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(534.442626953125 191.07421875) rotate(0 55.449951171875 25)"><text x="55.449951171875" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">3. Analysis </text><text x="55.449951171875" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">&amp; Modeling</text></g><g stroke-linecap="round" transform="translate(697.431640625 168.37890625) rotate(0 97.953125 56.25)"><path d="M0 0 C46.02 1.07, 94.09 0.26, 195.91 0 M0 0 C61.17 0.81, 121.54 1.41, 195.91 0 M195.91 0 C195.78 24.79, 196.48 53.65, 195.91 112.5 M195.91 0 C196.1 33.81, 195.64 69.11, 195.91 112.5 M195.91 112.5 C130.1 114.61, 63.9 115.38, 0 112.5 M195.91 112.5 C118.85 114.32, 42.74 112.96, 0 112.5 M0 112.5 C-0.27 78.21, -1.54 40.49, 0 0 M0 112.5 C-0.21 86.41, -1.02 60.04, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(715.7948226928711 187.12890625) rotate(0 79.5899429321289 37.5)"><text x="79.5899429321289" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">4. Visualization, </text><text x="79.5899429321289" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">Representation </text><text x="79.5899429321289" y="67.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">&amp; Simulation</text></g><g stroke-linecap="round" transform="translate(927.9375 166.201171875) rotate(0 136.1142578125 51.1328125)"><path d="M0 0 C60.84 -0.51, 121.77 -0.89, 272.23 0 M0 0 C74.86 -0.01, 150.21 -0.99, 272.23 0 M272.23 0 C273.25 29.56, 272.52 58.43, 272.23 102.27 M272.23 0 C271.62 38.25, 272.49 76.81, 272.23 102.27 M272.23 102.27 C176.01 104.95, 83.12 103.54, 0 102.27 M272.23 102.27 C170.68 102.4, 69.8 103.6, 0 102.27 M0 102.27 C-1.07 64.01, -1.59 27.16, 0 0 M0 102.27 C-0.82 68.37, 0.31 36.24, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(968.7918291091919 179.833984375) rotate(0 95.2599287033081 37.5)"><text x="95.2599287033081" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">5. Infrastructure</text><text x="95.2599287033081" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">Maintenance &amp;</text><text x="95.2599287033081" y="67.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic"> Data Stewardship</text></g><g stroke-linecap="round" transform="translate(1226.38671875 165.263671875) rotate(0 97.703125 46.09375)"><path d="M0 0 C54.59 -0.52, 108.24 1.39, 195.41 0 M0 0 C64.88 -2.17, 130.89 -1.75, 195.41 0 M195.41 0 C196 20.09, 197.38 39.07, 195.41 92.19 M195.41 0 C195.25 18.62, 195.41 37.93, 195.41 92.19 M195.41 92.19 C127.56 94.16, 57.56 92.78, 0 92.19 M195.41 92.19 C128.97 90.93, 62.87 90.53, 0 92.19 M0 92.19 C-0.99 58.08, 0.92 22.6, 0 0 M0 92.19 C1.1 66.53, 0.48 40.29, 0 0" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1241.559913635254 186.357421875) rotate(0 82.5299301147461 25)"><text x="82.5299301147461" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">6. Sustainability </text><text x="82.5299301147461" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">Applications</text></g><g transform="translate(28.272552490234375 191.572265625) rotate(0 90.28994750976562 25)"><text x="90.28994750976562" y="17.619999999999997" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">1. Data Collection </text><text x="90.28994750976562" y="42.62" font-family="Excalifont, Segoe UI Emoji" font-size="20px" fill="#1e1e1e" text-anchor="middle" style="white-space: pre;" direction="ltr" dominant-baseline="alphabetic">&amp; Acquisition</text></g><g stroke-linecap="round"><g transform="translate(101.49712653864003 172.802734375) rotate(0 138.26413204317998 -30.17578125)"><path d="M0.24 -0.38 C26.07 -10.39, 109.23 -60.92, 155.15 -60.77 C201.07 -60.62, 255.53 -9.73, 275.74 0.54 M-1.09 -1.63 C24.52 -11.39, 107.38 -59.39, 153.93 -59.38 C200.48 -59.38, 257.77 -11.27, 278.22 -1.58" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(101.49712653864003 172.802734375) rotate(0 138.26413204317998 -30.17578125)"><path d="M253.74 -6.68 C260.8 -5.97, 268.68 -4.83, 278.22 -1.58 M253.74 -6.68 C262.1 -5.56, 269.8 -3.1, 278.22 -1.58" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(101.49712653864003 172.802734375) rotate(0 138.26413204317998 -30.17578125)"><path d="M262.74 -21.22 C266.87 -15.9, 271.91 -10.17, 278.22 -1.58 M262.74 -21.22 C268.07 -15.18, 272.76 -7.86, 278.22 -1.58" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(408.1740100675263 170.2221253236729) rotate(0 95.73463683072023 -24.067794656782212)"><path d="M-1.09 0.92 C15.72 -7.95, 68.79 -55.16, 101.02 -54.35 C133.26 -53.55, 177.15 -4.37, 192.33 5.73 M0.54 0.36 C17.73 -8.29, 71.46 -53.82, 103.37 -53.28 C135.29 -52.74, 177.13 -5.97, 192.02 3.6" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(408.1740100675263 170.2221253236729) rotate(0 95.73463683072023 -24.067794656782212)"><path d="M168.5 -4.87 C177.29 -3.18, 181.59 2.06, 192.02 3.6 M168.5 -4.87 C176.19 -1.8, 185.2 0.16, 192.02 3.6" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(408.1740100675263 170.2221253236729) rotate(0 95.73463683072023 -24.067794656782212)"><path d="M179.45 -18.01 C184.71 -12.32, 185.6 -3, 192.02 3.6 M179.45 -18.01 C183.56 -10.48, 188.92 -4.13, 192.02 3.6" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(601.2486457071694 174.6088417539005) rotate(0 108.83282669495267 -26.72460821511379)"><path d="M-0.12 0.17 C19.06 -8.67, 79.61 -52.06, 115.84 -54.24 C152.07 -56.42, 200.21 -19.74, 217.28 -12.9 M-1.64 -0.78 C17.4 -9.39, 79.08 -51.27, 115.4 -53.12 C151.73 -54.97, 199.08 -18.64, 216.31 -11.87" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(601.2486457071694 174.6088417539005) rotate(0 108.83282669495267 -26.72460821511379)"><path d="M191.59 -15.57 C200.85 -12.57, 208.26 -13.49, 216.31 -11.87 M191.59 -15.57 C196.96 -15.3, 204.43 -12.64, 216.31 -11.87" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(601.2486457071694 174.6088417539005) rotate(0 108.83282669495267 -26.72460821511379)"><path d="M199.75 -30.6 C205.9 -22.13, 210.32 -17.57, 216.31 -11.87 M199.75 -30.6 C203.12 -26.56, 208.51 -20.07, 216.31 -11.87" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(834.1603381925263 165.97723844332018) rotate(0 131.80567875386618 -23.284575552129297)"><path d="M1.06 2.83 C20.62 -6.08, 72.52 -49.38, 116.18 -50.47 C159.84 -51.56, 238.67 -11.48, 263.05 -3.69 M0.16 1.57 C19.75 -7.17, 72.09 -48.08, 115.72 -49.28 C159.36 -50.47, 237.59 -12.85, 261.99 -5.61" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(834.1603381925263 165.97723844332018) rotate(0 131.80567875386618 -23.284575552129297)"><path d="M236.99 -5.89 C241.34 -4.5, 245.97 -6.94, 261.99 -5.61 M236.99 -5.89 C245.82 -5.15, 255.81 -6.18, 261.99 -5.61" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(834.1603381925263 165.97723844332018) rotate(0 131.80567875386618 -23.284575552129297)"><path d="M243.02 -21.89 C246.12 -17.22, 249.53 -16.44, 261.99 -5.61 M243.02 -21.89 C249.48 -15.25, 257.27 -10.41, 261.99 -5.61" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1122.712930478854 161.9994690736729) rotate(0 117.41478970150223 -26.50489649982029)"><path d="M-0.34 -0.19 C18.5 -9.14, 72.84 -54.38, 111.88 -54.12 C150.93 -53.86, 213.63 -7.73, 233.93 1.38 M1.69 -1.34 C20.43 -10.11, 71.64 -53.09, 110.75 -52.94 C149.86 -52.8, 215.92 -9.57, 236.36 -0.46" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1122.712930478854 161.9994690736729) rotate(0 117.41478970150223 -26.50489649982029)"><path d="M211.61 -3.96 C216.4 -3.75, 220.69 -3.94, 236.36 -0.46 M211.61 -3.96 C221.48 -2.97, 231.11 -2, 236.36 -0.46" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1122.712930478854 161.9994690736729) rotate(0 117.41478970150223 -26.50489649982029)"><path d="M219.65 -19.05 C222.73 -15.74, 225.36 -12.81, 236.36 -0.46 M219.65 -19.05 C226.33 -12.33, 232.91 -5.62, 236.36 -0.46" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1343.240234375 263.4375) rotate(0 -607.6904296875 37.03125)"><path d="M0.68 -1.19 C-102.42 11.18, -416.68 72.45, -619.23 73.28 C-821.79 74.12, -1115.13 15.33, -1214.67 3.82 M-0.42 0.79 C-103.12 13.38, -414.67 74.26, -617.11 74.41 C-819.55 74.56, -1115.11 13.74, -1215.06 1.68" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1343.240234375 263.4375) rotate(0 -607.6904296875 37.03125)"><path d="M-1190.53 -3.14 C-1198.67 -3.67, -1204.09 0.59, -1215.06 1.68 M-1190.53 -3.14 C-1198.61 -1.54, -1207.52 -0.52, -1215.06 1.68" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1343.240234375 263.4375) rotate(0 -607.6904296875 37.03125)"><path d="M-1193.16 13.75 C-1200.52 9.01, -1205.28 9.05, -1215.06 1.68 M-1193.16 13.75 C-1200.21 9.71, -1208.25 5.1, -1215.06 1.68" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1342.1085290273093 263.3154700241937) rotate(0 -493.3642578125 35.107421875)"><path d="M-0.26 -0.5 C-103.14 12.16, -453.62 75.76, -617.88 75.11 C-782.15 74.46, -924.38 8.6, -985.84 -4.38 M1.8 -1.8 C-101.16 10.61, -454.05 73.79, -618.71 73.53 C-783.37 73.28, -924.87 9.72, -986.14 -3.34" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1342.1085290273093 263.3154700241937) rotate(0 -493.3642578125 35.107421875)"><path d="M-961.19 -4.86 C-968.2 -4.16, -971.81 -2.69, -986.14 -3.34 M-961.19 -4.86 C-967.8 -4.2, -974.19 -3.4, -986.14 -3.34" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1342.1085290273093 263.3154700241937) rotate(0 -493.3642578125 35.107421875)"><path d="M-966.05 11.53 C-971.75 8.19, -974.15 5.6, -986.14 -3.34 M-966.05 11.53 C-971.43 7.96, -976.58 4.57, -986.14 -3.34" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1332.15025969062 264.0082177669692) rotate(0 -371.2255859375 31.3916015625)"><path d="M0.49 -0.21 C-102.81 11.88, -494.89 74.75, -618.76 72.99 C-742.63 71.23, -722.29 3.45, -742.72 -10.78 M-0.72 -1.37 C-103.71 10.8, -492.57 75.88, -616.38 73.97 C-740.2 72.05, -722.32 1.45, -743.62 -12.86" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1332.15025969062 264.0082177669692) rotate(0 -371.2255859375 31.3916015625)"><path d="M-724.86 3.67 C-732.52 -3.71, -741.19 -9.46, -743.62 -12.86 M-724.86 3.67 C-731.77 -2.49, -737.6 -8.57, -743.62 -12.86" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1332.15025969062 264.0082177669692) rotate(0 -371.2255859375 31.3916015625)"><path d="M-739.88 11.86 C-741.76 1.26, -744.65 -7.65, -743.62 -12.86 M-739.88 11.86 C-741.73 3.04, -742.43 -5.84, -743.62 -12.86" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1341.74010344062 260.5121240169691) rotate(0 -309.0576171875 37.03125)"><path d="M-1.02 1.09 C-103.75 13.34, -523.72 72.03, -616.97 74.02 C-710.22 76, -569.94 22.99, -560.52 12.98 M0.64 0.61 C-102.08 13.02, -523.63 73.34, -617.32 75.53 C-711.02 77.71, -571.01 23.8, -561.52 13.72" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1341.74010344062 260.5121240169691) rotate(0 -309.0576171875 37.03125)"><path d="M-578.18 32.36 C-572.33 29.79, -570.1 22.53, -561.52 13.72 M-578.18 32.36 C-573.91 28.97, -571.28 24.86, -561.52 13.72" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1341.74010344062 260.5121240169691) rotate(0 -309.0576171875 37.03125)"><path d="M-586.26 17.29 C-578.35 18.52, -574.12 14.98, -561.52 13.72 M-586.26 17.29 C-580.36 17.03, -576.05 16.05, -561.52 13.72" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask><g stroke-linecap="round"><g transform="translate(1340.35338469062 262.445717766969) rotate(0 -309.0576171875 37.03125)"><path d="M-0.36 0.56 C-103.53 13.09, -561.81 73.15, -618.89 74.12 C-675.97 75.08, -388.63 17.75, -342.84 6.35 M1.65 -0.19 C-101.14 12.64, -559.12 74.4, -616.59 75.69 C-674.05 76.97, -388.55 19.06, -343.15 7.5" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1340.35338469062 262.445717766969) rotate(0 -309.0576171875 37.03125)"><path d="M-364.21 20.96 C-356.66 15.57, -351.01 14.16, -343.15 7.5 M-364.21 20.96 C-359.05 17.55, -353.59 12.94, -343.15 7.5" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g><g transform="translate(1340.35338469062 262.445717766969) rotate(0 -309.0576171875 37.03125)"><path d="M-367.94 4.27 C-359.38 4.04, -352.57 7.78, -343.15 7.5 M-367.94 4.27 C-361.82 5.46, -355.33 5.41, -343.15 7.5" stroke="#1e1e1e" stroke-width="2" fill="none"></path></g></g><mask></mask></svg>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## 1. Data Collection & Acquisition
@@ -285,7 +286,7 @@ Ideal workflow diagram:
 - What do we mean by "Smart"?
 - Fire Modeling
 - Model Ethics
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## 4. Visualization, Representation & Simulation
@@ -304,7 +305,7 @@ Ideal workflow diagram:
 - Economic Planning
 - Biodiversity Monitoring
 - Urban Intelligence
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Objectives ⛳
@@ -320,7 +321,7 @@ By the end of the semester, you should be able to:
 5. Assess how infrastructure **maintenance challenges and infrastructural invisibility** play out in environmental data workflows and the role the play in quality and reliability. 
     
 6. Integrate evidence from **multiple disciplines and epistemic traditions** to develop comprehensive analyses of environmental data challenges.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Course Project 🗂
@@ -330,7 +331,7 @@ By the end of the semester, you should be able to:
 - Critical analysis of course literature
 - Builds argument exploring course topics
 - Engages with provided readings.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FBFAF8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## b. Team Work: Applied Data Analysis
@@ -346,7 +347,7 @@ Examples of possible analysis:
     - Designs data pathways for environmental action
 
 _Teams formed by the end of Week 2; interdisciplinary collaboration is encouraged_
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Zotero Library 📚
@@ -355,7 +356,7 @@ _Teams formed by the end of Week 2; interdisciplinary collaboration is encourage
 
 
 https://www.zotero.org/groups/5808538/data_in_a_changing_planet/library
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Slides 🖥/EDS.jpg" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Users/elsurista/Documents/1.- SEEK Post Doc/a. Sildes/Slides/EDS.jpg" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # 4. Sign-ups 
@@ -367,14 +368,14 @@ https://www.zotero.org/groups/5808538/data_in_a_changing_planet/library
 
 
 **See you on Wednesday!**
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Slides 🖥/EDS.jpg" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Slides 📩/EDS.jpg" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Week 1 - Day 2 
 ### _Wednesday, January 14_
 
 Index >> #Slides for class
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 |      |         |
@@ -389,7 +390,7 @@ Hailey | Rylie
 Haley | Suleiman 
 Jonathan | Tommy 
 Katherine
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#004E89" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#004E89" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Sociotechnical 🧑🏻‍🔧️🛰
@@ -399,15 +400,15 @@ The word **Sociotechnical** is aimed to capture how **technologies are fundament
 2. Technical artifacts and social entities **co-construct** **each other**, along with their meaning, their sense of purpose and their deployment trajectories. 
 
 Source: Bijker, Wiebe E. 1995. _Of Bicycles, Bakelites, and Bulbs: Toward a Theory of Sociotechnical Change_. Inside Technology. Cambridge, Mass: MIT Press.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#B4C7BF" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#B4C7BF" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Knowledge Infrastructures and the Making of Global Climate 🌦🛰
 
 1. Edwards, Paul N. 2010. “Thinking Globally.” In _A Vast Machine: Computer Models, Climate Data, and the Politics of Global Warming_, 1–25. MIT Press.
    
-<img src="Images (screenshots, pitctures, etc.)/Pasted image 20250114142329.png" alt="" style="width: 500px; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" -->
+   <img src="Images (screenshots, pitctures, etc.)/Pasted image 20250114142329.png" alt="" style="width: 500px; object-fit: fill">
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## How do we know? 🌎
@@ -421,7 +422,7 @@ Infrastructures function in a **layered** and **interconnected** way:
 1. Instruments, sampling techniques, and statistical analysis. 
 2. Who collected the evidence? Where do they get the authority to say so?
 3. How does evidence come to count as such? (data, theories, models; culture and moral commitments)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Features of Infrastructure 🪆
@@ -439,11 +440,11 @@ Based on Star & Ruhleder (1996)
 9. **Modular increment, not all at once**
     - Big, layered, and complex: it changes gradually, not all at once (not from above)
     - Requires negotiation and adjustments (with other systems)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 > "For us, infrastructures reside in a naturalized background, as ordinary and unremarkable as trees, daylight, and dirt. Our civilizations fundamentally depend on them, yet we notice them mainly when they fail. They are the connective tissues and the circulatory systems of modernity" (p. 9)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### What is a Knowledge Infrastructure? ⚙️ 🕸 
@@ -456,7 +457,7 @@ And how It is different from other infrastructures:
     - **Enduring** organizations and institutions
     - **Physical** facilities on the ground
     - **Support** systems and staff
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#EFEFD0" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### A knowledge infrastructure in action 🏗
@@ -466,13 +467,13 @@ The study of the climate serves as a *model entity*.
 - Depends on international cooperation
 
 >"**No one lives in a 'global' climate**. Without scientific guidance, not even the most cosmopolitan traveler could perceive a global average temperature change of about +0.75°C, the amount we have seen so far. Extreme weather events — heat waves, hurricanes, droughts, floods — dominate human experience and memory, and they often create false impressions of average conditions" (p. 5)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Global objects 🌐
 
 <img src="Images (screenshots, pitctures, etc.)/Screenshot 2025-01-15 at 9.06.41 a.m..png" alt="" style="object-fit: scale-down">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Global objects 🌐
@@ -485,7 +486,7 @@ The study of the climate serves as a *model entity*.
 7. World Meteorological Organization (WMO, 1951) / Intl. Met. Org. (IMO, 1873)
 8. Boards of Experts (IPCC)
 9. ...?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Infrastructural Inversion 🔺🔻
@@ -494,7 +495,7 @@ The study of the climate serves as a *model entity*.
 
 - What other knowledge infrastructures do we take for granted?
 - When do we notice them?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Infrastructure as "holding" consensus 👌🏻
@@ -503,7 +504,7 @@ The study of the climate serves as a *model entity*.
 - What is the relationship between consensus and infrastructure? What type of elements constitute it?
 - Does this change your understanding of scientific facts and the data supporting it? How?
 - What do you think "reliable" means in this case?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Thinking in a Global Scope (and infrastructure development) 🧱
@@ -511,12 +512,12 @@ The study of the climate serves as a *model entity*.
 > "Every stage of infrastructure development is marked by struggle [...] The fundamental dynamic of infrastructure development can thus be described as a perpetual oscillation between the desire for smooth, system-like behavior and the need to combine capabilities no single system can yet provide." (p. 13)
 - How do infrastructures shape our ability to think about global problems?
 - What are the limitations of these systems?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Globalism as a *project* 🗺
 > "Therefore, I will speak not only of informational globalism but also of infrastructural globalism: projects for permanent, unified, world-scale institutional-technological complexes that generate globalist information not merely by accident, as a byproduct of other goals, but by design. (...) “...it is a project: a structured, goal-directed, long-term practice to build a world-spanning network, always including a worldwide epistemic community as well as a technical base. If such a project succeeds, it creates an infrastructure that endures far beyond individual careers, social movements, or political trends. This endurance itself legitimizes the knowledge it produces, and becomes self-perpetuating.” (Edwards, 2010, p. 26)" (p. 25)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F0E1BC" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ### Globalism as a *project* 🗺
@@ -526,14 +527,14 @@ The study of the climate serves as a *model entity*.
 - What are the differences between this being a project and not a *voluntarist internationalism*?
 - How does this shape our understanding of climate change as a global phenomenon? 
 - What are the implications for memory? Why do you think the author mentioned this?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Slides 🖥/EDS.jpg" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Users/elsurista/Documents/1.- SEEK Post Doc/a. Sildes/Slides/EDS.jpg" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Week 2 - Day 1
 ### _Wednesday, January 14_
 
 Index >> #Slides for class
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#4f000b" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#4f000b" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 |      |         |
@@ -547,7 +548,7 @@ Index >> #Slides for class
 | Hailey | Rylie
 | Haley | Suleiman 
 | Jonathan | Tommy
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Recap: Environmental Data & Infrastructures
@@ -559,13 +560,13 @@ Index >> #Slides for class
 	- Developing KIs (and consensus) involves struggles that shape the ability to know (global warming, the environment, etc.)
 	- Globalism is a *project* for both information and infrastructure (permanent, unified, world-scale, long-term, goal-directed)
 	- Endurance (beyond careers, technical solutions, social movements, and political trends) is tied to how legitimate the knowledge is.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Recap: LA Fires Example
 
 <head> <title>Embedded URL</title> <style> .responsive-iframe { width: 1400px; /* Modify this value */ height: 1000px; /* Modify this value */ border: none; } </style> </head> <body> <iframe src="https://satelliteimagerydemostg.z5.web.core.windows.net/damage-assessment/los_angeles_palisades_fire_1_10_2025.html" class="responsive-iframe" allowfullscreen> </iframe> </body>
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 - [Maxar](https://www.maxar.com/open-data: imagery from January 10, 2025. Maxar provides high-resolution satellite images of natural disasters.
@@ -574,7 +575,7 @@ Index >> #Slides for class
     1. Government agencies: USDA (Land-use data), USGS (Topography, terrain info)
     2. Others: DigitalGlobe, GeoEye, Getmapping, AeroGRID, IGN, IGP, UPR-EGP, and the GIS community.
 - [Leaflet](https://leafletjs.com/)helps create the map we see on the webpage.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#020A20" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Recap: Course's Goal
@@ -584,15 +585,15 @@ Index >> #Slides for class
 	- Quality and limitations of Environmental Data. 
 	- Challenges to maintenance/sustainability of data streams. 
 	- Integration (of processes and disciplines).
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#789FAD" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#789FAD" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Sensing and computation, their role in the making of the environment 🌳📡
 
 2. Gabrys, Jennifer. 2016. “Environment as Experiment in  Sensing Technology.” In _Program Earth: Environmental Sensing Technology and the Making of a Computational Planet_, 1–25. Electronic Mediations 49. Minneapolis: University of Minnesota Press.
  
-<img src="Images (screenshots, pitctures, etc.)/Pasted image 20250114180425.png" alt="" style="width: 500px; object-fit: fill">
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+     ![500](Images (screenshots, pitctures, etc.)/Pasted image 20250114180425.png)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## "The earth became programmable." 🧑🏻‍💻️🛰
@@ -603,7 +604,7 @@ Things we will pay attention to:
 1. An **emerging** way of organizing the relationship with the environment (<mark>program(m)-**ing**</mark>)
 2. Movement from space to Earth: applications on Earth of sensor technologies 
 3. New possibilities resulting from these changes (grounded, local as opposed to global, globalist efforts)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What is Programmability? 🔗
@@ -615,7 +616,7 @@ Three key aspects:
 - Goes beyond specific objects (software, code)
 - Creates new relations (hence, a new ecology/environment)
 - Shapes how we experience the world (embedded in our interactions)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The Evolution of Environmental Sensing 🌿💽
@@ -625,7 +626,7 @@ Three key aspects:
 > "If Sputnik made the **earth programmable**, it was in part through radio transmissions that encircled the planet and created a live auditory map of a **new orbital environment.**" (p. 1)
 
 > “Satellites now regularly monitor environmental change, tracking carbon dioxide in the atmosphere and patterns of deforestation. **Satellites** are referred to as “**eyes in the sky**” that communicate to ground stations while relaying data about and through environments, as they **watch over** earthly spaces and even **transform the planet into a digital earth**. <mark>Our understanding of environmental systems is now bound up with communication technologies that sense earthly processes</mark>.”(p. 3)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The Evolution of Environmental Sensing 🍃📀
@@ -633,7 +634,7 @@ Three key aspects:
 #### 2. Current Sensor Networks are earthly applications of those technologies
 
 > "Environments are now monitored not just by satellites but also increasingly by a wide range of **sensors that track everything from air quality to traffic levels** to microclimates and seismic activity. Such environmental monitoring is a practice that is computational, often networked, frequently automated, and **increasingly** **ubiquitous**." (p. 3)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Programs and networked expectations ➡️
@@ -642,7 +643,7 @@ Three key aspects:
 - **Real-time Monitoring**: Environmental conditions, air quality and temperature, movement of objects and bodies
 - **Response**: efficient, balanced; machine or human-based; "smart" implies some degree of automation
 - **Goals**: efficiency, balance, prevention, emergency response.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Sensing & Experience 
@@ -654,7 +655,7 @@ This means:
 - They shape how we understand environments.
 - Create new ways of experiencing the world.
 - Technologies are supporting **emerging** relations that are **programmed** with these technologies.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Contrasts and overlaps ⚪️ ⚫
@@ -668,7 +669,7 @@ This means:
 	- Distributed sensors
 	- Discrete and localized datasets
 	- Specific purposes under varied conditions.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#1A659E" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## The Multiple Earth 🌏 🌍 🌎
@@ -681,7 +682,7 @@ This means:
 	- The materialization of an object of management and **programmability**.
 
 <aside class="notes"><p>concresces, solidifies.</p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#789FAD" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#789FAD" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Citizen Sensing 🏛 🗼
@@ -692,11 +693,11 @@ This means:
 	- Open Technologies + DIY
 	- Epistemic Injustice + Environmental Justice Claims
 	- Can you think of other implications for citizens being able to sense their environments?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FF6B35" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FF6B35" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 # Discussion key points  📝
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Tech and environmental sense-making 🛠️ 🧰
@@ -705,7 +706,7 @@ This means:
 > "In existing literature, sensemaking aspects of media technologies are often discussed through theories of mediation or individual attention and embodiment. (...) “sensing” is focused on a human subject. (...) **Sensing here is not primarily or exclusively about human modalities of sensing**, but rather has to do with distributed formations and conjunctions of experience across human and nonhuman sensing subjects, in and through environments." (p. 23)
 - Can you think of ways that these distributed sensing tech can affect our understanding of the environment? 
 - What new environmental relationships emerge?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Implications for democracy 
@@ -714,7 +715,7 @@ This means:
 - What role do you see for citizen sensing in environmental politics?
 - Do you see any limits for such a democratization? 
   (cf. #Features of Infrastructure 🪆)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#F3DAB8" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Technology & Environmental Action 
@@ -723,7 +724,7 @@ This means:
 
 - How do you think environmental sensing can shape environmental action?
 - What role do citizens play in this process? What role can technologies and technical skills play?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#ce4257" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#ce4257" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Data standpoints
@@ -742,7 +743,7 @@ Jasanoff, Sheila. 2017. “Virtual, Visible, and Actionable: Data Assemblages an
 (\*) Regime: a historically stable set of rules and practices oriented to govern the use and production of knowledge (Pestre 2003)
 
 <aside class="notes"><p>&#39;regimes of knowledge&#39; are a historically stable set of rules and practices oriented to govern the use and production of knowledge; the notion underscores the interactions between knowledge production and social, economic, historical, and legal transformations.  <em>CSI - WRI</em></p>
-</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" -->
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Knowledge infrastructures for the Anthropocene 🏭 🌍
@@ -750,7 +751,7 @@ Jasanoff, Sheila. 2017. “Virtual, Visible, and Actionable: Data Assemblages an
 Edwards, Paul N. 2017. “Knowledge Infrastructures for the Anthropocene.” _The Anthropocene Review_ 4 (1): 34–43. [https://doi.org/10.1177/2053019616679854](https://doi.org/10.1177/2053019616679854).
 
 Argument: We will continue to rely increasingly on KIs to understand and manage socio-environmental challenges. The environmental data we need to do this requires a new type of infrastructure that relies on new data practices that operate in more disaggregated levels (organizations, firms, etc.). He suggests recycling data resulting from other processes (exhaust data), using data from past research, and leaning on practical sciences.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Functions of Knowledge Infrastructures 🔬🥼
@@ -760,7 +761,7 @@ Argument: We will continue to rely increasingly on KIs to understand and manage 
 2. **Model** complex systems to test causal relationships (tipping points, unbalance)
 3. Build **long-term** **memory** of change (trends, speed of change, comparisons/benchmark)
 4. All of this supports **modeling**: explain the past and help project the future (in humans and nature)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Concepts to unpack 🗃
@@ -773,7 +774,7 @@ The Anthropocene brings
 - What do you think the concept of **Anthropocene** obscures? 
 - What Does this mean for environmental data? 
 - Do you see any relation with the standpoints proposed by Jasanoff?
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## A circular view of the Data (exhaust)
@@ -786,7 +787,7 @@ The Anthropocene brings
 	- User interactions (data exhaust)
 	- Untapped historical data
 	- Dark data from past research
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## A circular view of the Data (exhaust)
@@ -799,7 +800,7 @@ The Anthropocene brings
 	- Ideas of other sources of "data waste"?
 	- How do you turn waste into value? Limitations? Who owns the waste? 
   (data friction, ownership, privacy, metadata quality)
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#ff9b54" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Applied Knowledge for Environmental Action.
@@ -812,7 +813,7 @@ The Anthropocene brings
 	  * Supercomputers used for nuclear warfare support climate modeling. 
   * Ozone hole detection (global monitoring)
   * IPCC / UN Framework Convention on Climate Change (a model for global scale): 2015 Paris Agreements.
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Downscaling Knowledge
@@ -825,7 +826,7 @@ The Anthropocene brings
   * Top-down, globalist approach
   * Comprehensive review process (comment round and responses, editing, etc.)
   * Challenge of Local Relevance
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#720026" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## Knowledge Infrastructure Styles 
@@ -837,7 +838,7 @@ The Anthropocene brings
 | Purposeful design     | Practice-driven                              |
 | Aggregative           | Opportunistic                                |
 | Example: IPCC         | Example: carbon accounting/footprint (firms) |
-</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#ce4257" -->
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#ce4257" template="" -->
 <div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
 
 ## What holds these infrastructures together? 
@@ -848,128 +849,360 @@ The Anthropocene brings
 	- Conventions <--> Standards
 	- Learned by Membership <--> Installed Base
 - Jasanoff (2017): Nowhere <--> Everywhere <--> Somewhere
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Users/elsurista/Documents/1.- SEEK Post Doc/a. Sildes/Slides/EDS.jpg" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+# Week 3 - Day 1
+### _Monday, January 27_
+
+Index >> #Slides for class
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#2A113B" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+|      |             |
+| ---- | ----------- |
+| Alex | **Kehinde** |
+**Jonathan**  | **Luke**
+**Danny** | **Madison**
+**EJ** | **Marcela** 
+**Marshall** | Katherine  
+**Grace** | **Noella** 
+**Hailey** | **Rylie**
+**Haley** | **Suleiman**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Module 1: Data Collection 📊 📇
+
+- Topics: databases, survey systems (remote sensing, satellites), citizen science
+- Objectives: 
+1. Present key socio-technical components of data collection and memory practices
+2. Develop a critical take on cases of infrastructure-developing
+3. Examine power dynamics in environmental monitoring (CS + RS)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#481F48" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Databases, memory practices & knowledge for the Anthropocene
+
+Bowker, Geoffrey C. 2008. “Databasing the World: Biodiversity and the 2000s.” In _Memory Practices in the Sciences_, 1. paperback ed, 106–37. Inside Technology. Cambridge, Mass.: MIT Press.
+ 
+
+Argument: Retaining, accessing, and reordering the past requires memory devices as well as memory practices; both lie at the center of the transformations in the ways we know and understand the world. Our discourses about the past are connected to available information-processing technologies. In biodiversity, as in other environmental-related research areas that want to make sense of the past to understand what expects us, "databasing" implies representing, engaging while meditating, and understanding the past.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#481F48" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Thinking about the past 🏺🕰
+- An *inescapable time* transforms things. As time goes by, past forms become inaccessible. 
+  *[The Mahabharata](https://en.wikipedia.org/wiki/Mahabharata)*
+- Our access to the past is "mediated." To "stop" time and be able to access history, systematization and standardization are a must. 
+  *Plant Fossil records*
+- Life outside human societies transforms "away from labels", while life inside "transforms towards them" in the hope of relief or advantage.
+  *Mary Douglas*
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## A globalizing "we" and the power of classifications 🗄🗂
+
+- Enacts the nature/culture divide (raw, wild vs. civilized) -> **ethnocentric**.
+- Privileges **units that can circulate**: quantifiable and standardized measures.
+- Reduction of the complex to **discrete units** (Newtonian space-time).
+- Contrasts other ways of knowing (practical knowledge) and being in the world (hierarchies).
+	- e.g., in English, only 30 percent of words are verbs, but in Potawatomi, 70% are verbs (Robin Wall Kimmerer)
+	- [The Truth of Fact, the Truth of Feeling](https://en.wikipedia.org/wiki/The_Truth_of_Fact,_the_Truth_of_Feeling) on organization, accuracy, perception, and forgetting (Ted Chiang). 
+
+> "...[there] is enormous power in being able to read the past, to tell the generations (Bowker 1994), and we are <mark>seeking to colonize the past just as we (the globalizing “we”) are seeking to colonize the present</mark>.” (Bowker, 2008, p. 108)
+
+> “...we find the ability to order information about entities into lists using classifications to be a <mark>contemporary key to both state and scientific power</mark>” (Bowker, 2008, p. 108)
+
+ 
+ 
+<aside class="notes"><p>this is in chapter 5 of the same book.</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#843B62" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Memory Practices & Knowledge Organization 💭
+> "Databases are not a product of the computer revolution; if anything the computer revolution is a product of **the drive to database**" (p.109)
+
+- Memory has become cheaper over 200 years.
+- Memory "teases apart threads of memory" as:
+    - "Remembering what happened" and
+    - "Making present again" (p.110)
+- New storing capabilities allow new types of memory practices, socially and institutionally (engaging with, creating, and maintaining this memory). 
+
+> “Memory **prostheses** have multiplied around us; **memory devices are legion**; memory practices have been organized on massive scales: we now hold in the global memory details of events hundreds of thousands of years ago; masses of detail about lives in the twentieth century; countless photographs, tapes, diaries, souvenirs, memorials.” (p.110)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#2A113B" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Standards & Infrastructure  📄 🧑🏻‍🔧️
+
+"Working infrastructures standardize **both people and machines**" (p.6)
+
+Key points:
+- “There is no simple break point at which one can say that communications protocols stop and technical standards start.” (p. 113) 
+	- e.g., adaptation of writing practices to e-mail technologies, Mary Douglas quote, census and people becoming "like" their categories (reified). 
+- "Strings of bits traveling along wires are meaningless unless there is a shared set of 'handshakes'" (p.113)
+- (Positive) Network externalities drive adoption: "If five thousand more people buy telephones... my phone is suddenly much more valuable" (p.114)
+	- *De facto* standards gain and hold this position through positive externalities (QWERTY, MP3, PDFs)
+- "Standards setting is a key site of political work" (p.114) 
+	- Why? Coalitions, negotiations, power struggles?
+	- Examples: Mobile Com (GSM, 3G, LTE, 5G), Bluetooth, Wi-Fi (802.11 series)
+
+<aside class="notes"><p><strong>Reification (statistics)</strong>, the use of an idealized model to make inferences linking results from a model with experimental observations<br><a href="https://en.wikipedia.org/wiki/Reification_(computer_science)">https://en.wikipedia.org/wiki/Reification_(computer_science)</a><br>A computable/addressable object—a resource—is created in a system as a proxy for a non-computable/addressable object. By means of reification, something that was previously implicit, unexpressed, and possibly inexpressible is explicitly formulated and made available to conceptual (logical or computational) manipulation<br><strong>Reification (information retrieval)</strong>, the transformation of a natural-language statement such that actions and events represented by it become quantifiable variables<br><strong>Reification (Marxism)</strong>, the consideration of an abstraction of an object as if it had living existence and abilities</p>
+</div></aside></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Infrastructure development 🏗 🔗
+### in data storage and management.
+
+- **Key elements**: “Infrastructural development and maintenance requires **work**, a relatively **stable** **technology**, and **communication**.” (Bowker, 2008, p. 114)
+- **Work**: resources (time, skills) for implementation (e.g., 1920s, the advent of microfiche, the end of the book)
+- **Tech**: nothing guarantees the stability of vast datasets (infrastructuring does not mean a long life). 
+	- Stability has different layers. 
+	- Database architecture, storage capabilities, organizational practices 
+- **No storage medium is permanent**: changes in database structures, storage capabilities, and organizational practices affect data traceability, readability, and usability.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Infrastructure development 🏗 🔗
+### in data storage and management.
+
+- **Communication**: interoperability is the key to integration with established computing environments. 
+	- **Metadata** (data about data): provides context for something to be findable, accessible, interoperable, and replicable. 
+	- **Standard** criteria (names, fields, measures, etc.)
+	- Immediate **usefulness vs. preservation** (e.g., patient diagnosis vs. death certificates)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#481F48" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Knowledge Control & Database Politics 🔐
+
+"By control of knowledge, I refer to the question of who has the right to speak in the name of the science" (p.118)
+
+- "local ecological knowledge... is practice-based, has its own intricate weaving of knowledge about the environment, religious belief, and mythological expression, and cannot be easily conjured into a form that can be held on a computer" (Padel 1998)
+    - Knowledge (about the environment) is part of a way of being in the world, interlocked with "religious belief, and mythological expression."
+    - Storing is making decisions on what to preserve, how to measure, and priorities. 
+- **Ownership** determines who can legitimately speak "in the name of science." (e.g., Maxar satellite images)
+- New data capabilities novel forms of knowledge control.
+- Third-party companies aggregate data into marketable forms (e.g., Palantir)
+- Privacy concerns arise from distributed information sources: “...we have little expertise as a culture in dealing with highly distributed information sources” (Bowker, 2008, p. 118)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Evolution of scientific archiving and data sharing 
+1. **Immutable mobiles**: scientific papers are the "archive" (names of journals: *Archives, Annals, Proceedings*)
+	- Hypothesis (argumentation by authors)
+	- Data supporting the claims
+2. **Last 40 years**: databases are an end by themselves ()
+	- Theory-neutral repositories, spread across disciplines, raw data, reusability.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Archives for Planetary Management 🌍 🏛
+
+> “Michel Serres (1990) points out, we are now as a species taking on the role of managing the planet as a whole—its ecosystems and energy flows. **We now see nature as essentially only possible through human mediation**. We are building working archives from the submicroscopic level of genes up through the diversity of viral and bacterial species to large-scale floral and faunal communities and the mapping of atmospheric patterns and the health of the ozone layer. There is an articulation here between information and theory, but **the stronger connection is between information and action**... In this new and expanded process of scientific archiving, data must be reusable by scientists.” (Bowker, 2008, p. 128)
+- Planetary scale. 
+- Database Federation: a variety of data sources.
+- Action: policy recommendations, decision-making processes. 
+- How to manage all of this?
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#843B62" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Planetary Management Through Data 🌍 🏛
+"We now see nature as essentially only possible through human mediation" (p.124)
+
+Key Developments:
+
+- "Panoptical dreams weave together work from small-scale molecular biological to large-scale geological" (p.123)
+- “We need to historicize [our data]... to create flexible databases that are as rich ontologically as the social and natural worlds they map, and that might really help us gain long-term purchase on questions of planetary management” (Bowker, 2008, p. 123)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#402C4C" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Data Management Challenges 💾  🗃
+
+"The problem of what data to retain... is a metadata problem" (p.130)
+
+Crucial Issues:
+- Longevity of environmental data is determined by **documentation** and **metadata**.
+- "No storage medium is permanent" (p.116)
+- "You always have to know some context" (p.117)
+- How do you deal with distributed databases?
+- How do we ensure data (resources, work, opportunities) is not lost?
+- This is a **distributed collective practice**
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" template="" data-background-color="#020A20" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Archival practices *accounting for life* 📚🦋🌳
+### From Human to Digital Memory
+
+- Linnaeus: 18th and 19th century; genera names made for memorization purposes; universal, distinct, literally meaningful. 
+- Field guides: "Earliest books ever printed were field guides for naturalists."
+- Species classification: Memory for genera, books for species (information could not be kept in the head; books taken into the field).
+- Digital era: Flexible, multifaceted classifications
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-dark-background drop" data-background-color="#481F48" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Computing & Classification Evolution 💻
+**Key Developments:**
+
+- Multifaceted systems for viruses
+- Flexible parameter-based disease classification
+- Object-oriented databases: "Redefine basic operations on the fly"
+- GUIDs and "barcoding life"
+- Cutting down collections.
+
+"This database-driven approach to the history of life is complemented by extended uses of the metaphor of computers and their programs in the historical sciences. Life is described as itself a program, with DNA being code. (p.134)"
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#f67e7d" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Retaining and reordering the past
+
+- *Clock*: industrial and bureaucratic era, regular chronology. 
+- *Computers*: life is a series of *programs* (instructions) in sequence, a set of generative algorithms. 
+- Now, we can **reconfigure the past**:
+	- Same kind of information technologies in different disciplines. 
+	- Same steps taken logically *within* each specific discipline. 
+	- Technology is making inter-disciplinary work possible, but also to have separate stories for each discipline.
+- The framing of the past results from an ecology (inter-relation of components and relation to their surroundings) of memory practices.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FFB997" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Remote Sensing 📡  🛰
+
+What is it? 
+
+- Data Collection happens without *on-site observation*: satellites, aircraft, drones, and sensor networks. 
+- Used in Earth and Geophysical Sciences (also for commercial, economic, planning and humanitarian uses)
+- Data Processing: high-performance computing, storage systems, networked infrastructure.
+- Key Infrastructures: GPS/GNSS networks, weather satellites, earth observation systems, communication networks.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FB9C8A" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## Remote Sensing  📡  🛰 
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Remote_Sensing_Illustration.jpg" alt="RemoteSensing" style="object-fit: scale-down">
+
+Source: [Wikipedia](https://en.wikipedia.org/wiki/Remote_sensing)
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="has-light-background drop" data-background-color="#FB9C8A" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+### Announcements:
+
+1. We will have a quiz next Wednesday.
+2. I will process your responses to the _needs and expectations_ questionnaire. 
+3. On February 8, we will have a guest lecture on using satellite images for environmental and human rights monitoring.
+</div></script></section><section  data-markdown><script type="text/template"><!-- .slide: class="drop" data-background-image="Users/elsurista/Documents/1.- SEEK Post Doc/a. Sildes/Slides/EDS.jpg" template="" -->
+<div class="" style="position: absolute; left: 0px; top: 0px; height: 1200px; width: 1800px; min-height: 1200px; display: flex; flex-direction: column; align-items: center; justify-content: center" absolute="true">
+
+## See you next wednesday!
 </div></script></section></div>
     </div>
 
     <script src="dist/reveal.js"></script>
-
+    <script src="plugin/notes/notes.js"></script>
     <script src="plugin/markdown/markdown.js"></script>
     <script src="plugin/highlight/highlight.js"></script>
+
     <script src="plugin/zoom/zoom.js"></script>
-    <script src="plugin/notes/notes.js"></script>
     <script src="plugin/math/math.js"></script>
-	<script src="plugin/mermaid/mermaid.js"></script>
-	<script src="plugin/chart/chart.min.js"></script>
-	<script src="plugin/chart/plugin.js"></script>
-	<script src="plugin/customcontrols/plugin.js"></script>
-	<script src="plugin/chalkboard/plugin.js"></script>
-	<script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
+    <script src="plugin/mermaid/mermaid.js"></script>
+    <script src="plugin/chart/chart.umd.js"></script>
+    <script src="plugin/chart/plugin.js"></script>
+    <script src="plugin/customcontrols/plugin.js"></script>
+    <script src="plugin/elapsed-time-bar/elapsed-time-bar.js"></script>
 
     <script>
-      function extend() {
-        var target = {};
-        for (var i = 0; i < arguments.length; i++) {
-          var source = arguments[i];
-          for (var key in source) {
-            if (source.hasOwnProperty(key)) {
-              target[key] = source[key];
+        function extend() {
+            const target = {};
+            for (let i = 0; i < arguments.length; i++) {
+                const source = arguments[i];
+                for (const key in source) {
+                    if (source.hasOwnProperty(key)) {
+                        target[key] = source[key];
+                    }
+                }
             }
-          }
+            return target;
         }
-        return target;
-      }
 
-	  function isLight(color) {
-		let hex = color.replace('#', '');
+        function isLight(color) {
+            let hex = color.replace('#', '');
 
-		// convert #fff => #ffffff
-		if(hex.length == 3){
-			hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
-		}
+            // convert #fff => #ffffff
+            if (hex.length == 3) {
+                hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+            }
 
-		const c_r = parseInt(hex.substr(0, 2), 16);
-		const c_g = parseInt(hex.substr(2, 2), 16);
-		const c_b = parseInt(hex.substr(4, 2), 16);
-		const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
-		return brightness > 155;
-	}
+            const c_r = parseInt(hex.substr(0, 2), 16);
+            const c_g = parseInt(hex.substr(2, 2), 16);
+            const c_b = parseInt(hex.substr(4, 2), 16);
+            const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
+            return brightness > 155;
+        }
 
-	var bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
-	var isLight = isLight(bgColor);
+        const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--r-background-color').trim();
 
-	if(isLight){
-		document.body.classList.add('has-light-background');
-	} else {
-		document.body.classList.add('has-dark-background');
-	}
+        if (isLight(bgColor)) {
+            document.body.classList.add('has-light-background');
+        } else {
+            document.body.classList.add('has-dark-background');
+        }
 
-      // default options to init reveal.js
-      var defaultOptions = {
-        controls: true,
-        progress: true,
-        history: true,
-        center: true,
-        transition: 'default', // none/fade/slide/convex/concave/zoom
-        plugins: [
-          RevealMarkdown,
-          RevealHighlight,
-          RevealZoom,
-          RevealNotes,
-          RevealMath.MathJax3,
-		  RevealMermaid,
-		  RevealChart,
-		  RevealCustomControls,
-		  RevealChalkboard, 
-		  ElapsedTimeBar
-        ],
+        // default options to init reveal.js
+        const defaultOptions = {
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            transition: 'default', // none/fade/slide/convex/concave/zoom
+            plugins: [
+                RevealMarkdown,
+                RevealHighlight,
+                RevealZoom,
+                RevealNotes,
+                RevealMath.MathJax3,
+                RevealMermaid,
+                RevealChart,
+                RevealCustomControls,
+                ElapsedTimeBar
+            ],
+            allottedTime: 120 * 1000,
+            mathjax3: {
+                mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
+            },
+            markdown: {
+                gfm: true,
+                mangle: true,
+                pedantic: false,
+                smartLists: false,
+                smartypants: false,
+            },
+            mermaid: {
+                theme: isLight ? 'default' : 'dark',
+            },
+            customcontrols: {
+                controls: [
+                    {
+                        id: 'toggle-overview',
+                        title: 'Toggle overview (O)',
+                        icon: '<i class="fa fa-th"></i>',
+                        action: 'Reveal.toggleOverview();'
+                    },
+                ]
+            },
+        };
 
+        if ( pageInIframe() ) {
+            defaultOptions.scrollActivationWidth = 5;
+        }
 
-    	allottedTime: 120 * 1000,
+        // options from URL query string
+        const queryOptions = Reveal().getQueryHash() || {};
 
-		mathjax3: {
-			mathjax: 'plugin/math/mathjax/tex-mml-chtml.js',
-		},
-		markdown: {
-		  gfm: true,
-		  mangle: true,
-		  pedantic: false,
-		  smartLists: false,
-		  smartypants: false,
-		},
-
-		mermaid: {
-			theme: isLight ? 'default' : 'dark',
-		},
-
-		customcontrols: {
-			controls: [
-				{id: 'toggle-overview',
-				title: 'Toggle overview (O)',
-				icon: '<i class="fa fa-th"></i>',
-				action: 'Reveal.toggleOverview();'
-				},
-				{ icon: '<i class="fa fa-pen-square"></i>',
-				title: 'Toggle chalkboard (B)',
-				action: 'RevealChalkboard.toggleChalkboard();'
-				},
-				{ icon: '<i class="fa fa-pen"></i>',
-				title: 'Toggle notes canvas (C)',
-				action: 'RevealChalkboard.toggleNotesCanvas();'
-				},
-			]
-		},
-      };
-
-      // options from URL query string
-      var queryOptions = Reveal().getQueryHash() || {};
-
-      var options = extend(defaultOptions, {"width":"1800","height":"1200","margin":"0.1","minScale":"0.1","maxScale":"0.95","controls":true,"progress":"true","slideNumber":"true","transition":"concave","transitionSpeed":"default"}, queryOptions);
+        const options = extend(defaultOptions, {"controls":true,"progress":"true","slideNumber":"true","center":true,"transition":"concave","transitionSpeed":"default","width":"1800","height":"1200","margin":"0.1","minScale":"0.1","maxScale":"0.95"}, queryOptions);
     </script>
 
     <script>
       Reveal.initialize(options);
     </script>
-  </body>
+</body>
 
-  <!-- created with Advanced Slides -->
+<!-- created with Slides Extended -->
 </html>
